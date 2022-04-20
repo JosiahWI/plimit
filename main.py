@@ -22,15 +22,25 @@ parser.add_argument(
     help="server address in format addr:port"
 )
 
+
+def parse_addr(addr):
+    ip, port = addr.split(":")
+    return ip, int(port)
+
+
 if __name__ == "__main__":
     args = parser.parse_args()
-    limiter = PacketLimiter(args.target_addr)
+    
+    target_addr = parse_addr(args.target_addr)
+    listen_addr = parse_addr(args.listen_addr)
+    
+    limiter = PacketLimiter(target_addr)
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    sock.bind(args.listen_addr)
-    print("Bound to {}:{}\nRelaying to {}:{}".format(
-        *args.listen_addr,
-        *args.target_addr
+    sock.bind(listen_addr)
+    print("Bound to {}\nRelaying to {}".format(
+        args.listen_addr,
+        args.target_addr
     ))
 
     limiter.listen(sock)
