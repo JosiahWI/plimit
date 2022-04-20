@@ -23,7 +23,7 @@ class MockSocket:
         return self._queue.pop(0)
 
 
-    def send(self, message, serveraddress):
+    def sendto(self, message, serveraddress):
         self._sent.append((message, serveraddress))
 
 

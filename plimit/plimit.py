@@ -44,5 +44,5 @@ class PacketLimiter:
                 time_elapsed / self._count_recvd_from[ip]
             )
 
-            at_socket.send(data, self._serveraddress)
+            at_socket.sendto(data, self._serveraddress)
 
